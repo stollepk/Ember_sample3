@@ -1,0 +1,34 @@
+<div class="filters">
+  <div class="filter">
+    <label class="filter__label" for="select_privacy">Showing:</label>
+    {{#power-select triggerClass="my-input filter__input privacy-selector" searchEnabled=false options=privacyOptions selected=privacyFilter onchange=(action (mut privacyFilter)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  </div>
+  <div class="filter">
+    <label class="filter__label" for="select_privacy">Stars:</label>
+    {{#power-select triggerClass="my-input filter__input stars-selector" options=starsOptions selected=starsFilter onchange=(action (mut starsFilter)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  </div>
+  <div class="filter">
+    <label class="filter__label" for="select_privacy">Language:</label>
+    {{#power-select triggerClass="my-input filter__input language-selector" options=languageOptions selected=languageFilter onchange=(action (mut languageFilter)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  </div>
+</div>
+<div class="list" data-testid="repos-list">
+  {{#each filteredRepos as |repo|}}
+    {{repo-list/item repo=repo}}
+  {{else}}
+    <div class="empty-message" data-testid="no-repos-message">No repositories listed.</div>
+  {{/each}}
+  {{#if canLoadMore}}
+    {{#if isLoadingMore}}
+      {{spinner-indicator}}
+    {{else}}
+      <button class="my-button list__load-more" onclick={{action handleLoadMore}}>Load More</button>
+    {{/if}}
+  {{/if}}
+</div>
